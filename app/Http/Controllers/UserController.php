@@ -57,8 +57,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        // return 'Exibir apenas um user';
-        DB::table('users')->find($id);
+        dd(User::where('id', '=', $id)->get());
+        return User::where('id', '=', $id)->get();
     }
 
     /**
