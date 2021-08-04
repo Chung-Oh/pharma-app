@@ -83,45 +83,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
-            "gender"                         => "string",
-            "email"                          => "string",
-            "phone"                          => "string",
-            "cell"                           => "string",
-            "nat"                            => "string",
-            "status"                         => "required",
-            "name.title"                     => "string",
-            "name.first"                     => "string",
-            "name.last"                      => "string",
-            "location.street.number"         => "integer",
-            "location.street.name"           => "string",
-            "location.city"                  => "string",
-            "location.state"                 => "string",
-            "location.country"               => "string",
-            "location.postcode"              => "string",
-            "location.coordinates.latitude"  => "string",
-            "location.coordinates.longitude" => "string",
-            "location.timezone.offset"       => "string",
-            "location.timezone.description"  => "string",
-            "login.uuid"                     => "string",
-            "login.username"                 => "string",
-            "login.password"                 => "string",
-            "login.salt"                     => "string",
-            "login.md5"                      => "string",
-            "login.sha1"                     => "string",
-            "login.sha256"                   => "string",
-            "dob.date"                       => "string",
-            "dob.age"                        => "integer",
-            "registered.date"                => "string",
-            "registered.age"                 => "integer",
-            "phone"                          => "string",
-            "cell"                           => "string",
-            "id_user.name"                   => "string",
-            "id_user.value"                  => "string",
-            "picture.large"                  => "string",
-            "picture.medium"                 => "string",
-            "picture.thumbnail"              => "string",
-        ]);
+        $validated = $this->validateUserRequest($request);
 
         try {
             $user = User::find($id);
@@ -170,5 +132,53 @@ class UserController extends Controller
                 'message' => 'Erro ao remover usuário',
             ], 500);
         }
+    }
+
+    /**
+     * Validate fields of request.
+     *
+     * @param  Request $request
+     * @return array
+     */
+    private function validateUserRequest(Request $request) {
+        return $request->validate([
+            "gender"                         => "string",
+            "email"                          => "string",
+            "phone"                          => "string",
+            "cell"                           => "string",
+            "nat"                            => "string",
+            "status"                         => "required",
+            "name.title"                     => "string",
+            "name.first"                     => "string",
+            "name.last"                      => "string",
+            "location.street.number"         => "integer",
+            "location.street.name"           => "string",
+            "location.city"                  => "string",
+            "location.state"                 => "string",
+            "location.country"               => "string",
+            "location.postcode"              => "string",
+            "location.coordinates.latitude"  => "string",
+            "location.coordinates.longitude" => "string",
+            "location.timezone.offset"       => "string",
+            "location.timezone.description"  => "string",
+            "login.uuid"                     => "string",
+            "login.username"                 => "string",
+            "login.password"                 => "string",
+            "login.salt"                     => "string",
+            "login.md5"                      => "string",
+            "login.sha1"                     => "string",
+            "login.sha256"                   => "string",
+            "dob.date"                       => "string",
+            "dob.age"                        => "integer",
+            "registered.date"                => "string",
+            "registered.age"                 => "integer",
+            "phone"                          => "string",
+            "cell"                           => "string",
+            "id_user.name"                   => "string",
+            "id_user.value"                  => "string",
+            "picture.large"                  => "string",
+            "picture.medium"                 => "string",
+            "picture.thumbnail"              => "string",
+        ]);
     }
 }
