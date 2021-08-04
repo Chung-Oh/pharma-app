@@ -10,6 +10,10 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    public const STATUS_TRASH     = 'trash';
+    public const STATUS_DRAFT     = 'draft';
+    public const STATUS_PUBLISHED = 'published';
+
     /**
      * The attributes that are mass assignable.
      *

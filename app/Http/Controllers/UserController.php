@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Exception;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-
     /**
      * Display a message welcome.
      *
@@ -25,28 +26,24 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::all();
-    }
+        try {
+            $users = User::all();
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+            if ($users->isEmpty()) {
+                return response()->json([
+                    'message' => __("Base de dados sem usuários cadastrados"),
+                    'type'    => 'success'
+                ], 404);
+            }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+            return $users;
+
+        } catch (Exception $e) {
+            return new JsonResponse([
+                'code'    => 500,
+                'message' => 'Erro ao carregar lista de usuários',
+            ], 500);
+        }
     }
 
     /**
@@ -57,19 +54,24 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        dd(User::where('id', '=', $id)->get());
-        return User::where('id', '=', $id)->get();
-    }
+        try {
+            $user = User::find($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        return 'Editar um user';
+            if (empty($user)) {
+                return response()->json([
+                    'message' => __("Usuário não encontrado"),
+                    'type'    => 'success'
+                ], 404);
+            }
+
+            return $user;
+
+        } catch (Exception $e) {
+            return new JsonResponse([
+                'code'    => 500,
+                'message' => 'Erro ao carregar usuário',
+            ], 500);
+        }
     }
 
     /**
@@ -81,7 +83,66 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $validated = $request->validate([
+            "gender"                         => "string",
+            "email"                          => "string",
+            "phone"                          => "string",
+            "cell"                           => "string",
+            "nat"                            => "string",
+            "status"                         => "required",
+            "name.title"                     => "string",
+            "name.first"                     => "string",
+            "name.last"                      => "string",
+            "location.street.number"         => "integer",
+            "location.street.name"           => "string",
+            "location.city"                  => "string",
+            "location.state"                 => "string",
+            "location.country"               => "string",
+            "location.postcode"              => "string",
+            "location.coordinates.latitude"  => "string",
+            "location.coordinates.longitude" => "string",
+            "location.timezone.offset"       => "string",
+            "location.timezone.description"  => "string",
+            "login.uuid"                     => "string",
+            "login.username"                 => "string",
+            "login.password"                 => "string",
+            "login.salt"                     => "string",
+            "login.md5"                      => "string",
+            "login.sha1"                     => "string",
+            "login.sha256"                   => "string",
+            "dob.date"                       => "string",
+            "dob.age"                        => "integer",
+            "registered.date"                => "string",
+            "registered.age"                 => "integer",
+            "phone"                          => "string",
+            "cell"                           => "string",
+            "id_user.name"                   => "string",
+            "id_user.value"                  => "string",
+            "picture.large"                  => "string",
+            "picture.medium"                 => "string",
+            "picture.thumbnail"              => "string",
+        ]);
+
+        try {
+            $user = User::find($id);
+            $user->update($validated);
+
+            if (empty($user)) {
+                return response()->json([
+                    'message' => __("Usuário não encontrado"),
+                    'type'    => 'success'
+                ], 404);
+            }
+
+            return $user;
+
+        } catch (Exception $e) {
+            dd($e);
+            return new JsonResponse([
+                'code'    => 500,
+                'message' => 'Erro ao atualizar usuário',
+            ], 500);
+        }
     }
 
     /**
@@ -92,6 +153,23 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        return 'Remover um user';
+        try {
+            $user = User::find($id);
+
+            if (empty($user)) {
+                return response()->json([
+                    'message' => __("Usuário não encontrado"),
+                    'type'    => 'success'
+                ], 404);
+            }
+
+            return $user->delete();
+
+        } catch (Exception $e) {
+            return new JsonResponse([
+                'code'    => 500,
+                'message' => 'Erro ao remover usuário',
+            ], 500);
+        }
     }
 }
