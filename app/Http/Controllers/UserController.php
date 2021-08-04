@@ -125,7 +125,6 @@ class UserController extends Controller
 
         try {
             $user = User::find($id);
-            $user->update($validated);
 
             if (empty($user)) {
                 return response()->json([
@@ -134,10 +133,10 @@ class UserController extends Controller
                 ], 404);
             }
 
+            $user->update($validated);
             return $user;
 
         } catch (Exception $e) {
-            dd($e);
             return new JsonResponse([
                 'code'    => 500,
                 'message' => 'Erro ao atualizar usuário',
