@@ -1,61 +1,81 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Pharma Inc
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## Sumário:
+- [Sobre](#sobre)
+- [Objetivo](#objetivo)
+- [Tecnologias utilizadas](#tecnologias-utilizadas)
+- [Preparando ambiente](#preparando-ambiente)
+- [Coleção compartilhada de endpoints para Teste](#coleção-compartilhada-de-endpoints-para-Teste)
+- [Motivação](#motivação)
 
-## About Laravel
+## Sobre
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+A empresa Pharma Inc, está trabalhando em um projeto em colaboração com sua base de clientes.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Para facilitar a gestão e visualização da informação dos seus pacientes de maneira simples e objetiva em um Dashboard onde podem listar, filtrar e expandir os dados disponíveis.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Objetivo
 
-## Learning Laravel
+Desenvolver REST API da empresa Pharma Inc.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Um sistema de atualização que irá importar os dados para a Base de Dados com a versão mais recente do [Random User](https://randomuser.me/documentation) uma vez ao dia.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Tecnologias utilizadas
 
-## Laravel Sponsors
+> - **MySQL** Server versão: **5.7**
+> - **PHP** versão: **^7.2.5**
+> - **[Laravel Framework](https://laravel.com/docs/7.x#server-requirements)** versão: **^7.29**
+> - **[Task Scheduling](https://laravel.com/docs/7.x/scheduling)** - agendador de comandos do artisan para agendamento das importações
+> - **[Guzzle HTTP client](https://laravel.com/docs/7.x/http-client)** - permiti que faça solicitações HTTP de saída rapidamente para se comunicar com outras aplicações web
+> - **Postman** - desenvolvendo e testando os endpoints da REST API
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Preparando ambiente
 
-### Premium Partners
+Primeiramente devemos clonar o repositório `pharma-app`, segue abaixo algumas opções:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+- Baixando ZIP
 
-## Contributing
+- Utilizando HTTPS:
+```
+git clone https://github.com/Chung-Oh/pharma-app.git
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- Utilizando GitHub CLI:
+```
+gh repo clone Chung-Oh/pharma-app
+```
 
-## Code of Conduct
+Após clonar o projeto, devemos executar alguns comandos pelo terminal dentro do projeto clonado
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Baixando dependências do composer.json
+```
+composer install
+```
 
-## Security Vulnerabilities
+- Configurando o arquivo `.env`
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE={ sua_base_dados }
+DB_USERNAME={ seu_username }
+DB_PASSWORD={ sua_senha }
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Criar as tabelas com Laravel através do artisan
+```
+php artisan migrate
+```
 
-## License
+- Comando para importar dados da API de RandomUser e popular a base de dados do pharma-app
+```
+php artisan command:import-users
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Coleção compartilhada de endpoints para Teste
+
+- **[Aqui coleção dos endpoints desenvolvidos Postman](https://www.getpostman.com/collections/920591f9091311b8a775)**
+
+## Motivação
+
+Esse projeto foi um **[desafio lançado por TradeUP](https://github.com/tradeupgroup/testes-tradeup/blob/master/teste-1/teste-backend-2021.md)** para teste de desenvolvimento Backend.
