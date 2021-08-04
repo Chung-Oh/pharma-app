@@ -20,8 +20,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::prefix('v1')->group(function() {
     Route::get('/', 'UserController@initial');
-    Route::put('/users/{id}', 'UserController@edit');
-    Route::delete('/users/{id}', 'UserController@destroy');
-    Route::get('/users/{id}', 'UserController@show');
-    Route::get('/users', 'UserController@index');
+    Route::resource('users', 'UserController');
 });

@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Log;
 class ImportUsers extends Command
 {
     /**
+     * php artisan command:import-users
+     * 
      * The name and signature of the console command.
      *
      * @var string
@@ -72,7 +74,7 @@ class ImportUsers extends Command
                     'id_user'    => $user['id'],
                     'picture'    => $user['picture'],
                     'nat'        => $user['nat'],
-                    'status'     => 'published',
+                    'status'     => \App\User::STATUS_PUBLISHED,
                     'imported_t' => now()
                 ]);
             }
