@@ -83,7 +83,65 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validated = $request->validate([
+        $validated = $this->validateUserRequest($request);
+
+        try {
+            $user = User::find($id);
+
+            if (empty($user)) {
+                return response()->json([
+                    'message' => __("Usuário não encontrado"),
+                    'type'    => 'success'
+                ], 404);
+            }
+
+            $user->update($validated);
+            return $user;
+
+        } catch (Exception $e) {
+            return new JsonResponse([
+                'code'    => 500,
+                'message' => 'Erro ao atualizar usuário',
+            ], 500);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        try {
+            $user = User::find($id);
+
+            if (empty($user)) {
+                return response()->json([
+                    'message' => __("Usuário não encontrado"),
+                    'type'    => 'success'
+                ], 404);
+            }
+
+            return $user->delete();
+
+        } catch (Exception $e) {
+            return new JsonResponse([
+                'code'    => 500,
+                'message' => 'Erro ao remover usuário',
+            ], 500);
+        }
+    }
+
+    /**
+     * Validate fields of request.
+     *
+     * @param  Request $request
+     * @return array
+     */
+    private function validateUserRequest(Request $request) {
+        return $request->validate([
             "gender"                         => "string",
             "email"                          => "string",
             "phone"                          => "string",
@@ -122,54 +180,5 @@ class UserController extends Controller
             "picture.medium"                 => "string",
             "picture.thumbnail"              => "string",
         ]);
-
-        try {
-            $user = User::find($id);
-            $user->update($validated);
-
-            if (empty($user)) {
-                return response()->json([
-                    'message' => __("Usuário não encontrado"),
-                    'type'    => 'success'
-                ], 404);
-            }
-
-            return $user;
-
-        } catch (Exception $e) {
-            dd($e);
-            return new JsonResponse([
-                'code'    => 500,
-                'message' => 'Erro ao atualizar usuário',
-            ], 500);
-        }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        try {
-            $user = User::find($id);
-
-            if (empty($user)) {
-                return response()->json([
-                    'message' => __("Usuário não encontrado"),
-                    'type'    => 'success'
-                ], 404);
-            }
-
-            return $user->delete();
-
-        } catch (Exception $e) {
-            return new JsonResponse([
-                'code'    => 500,
-                'message' => 'Erro ao remover usuário',
-            ], 500);
-        }
     }
 }
