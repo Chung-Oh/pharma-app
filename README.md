@@ -74,7 +74,10 @@ php artisan command:import-users
 
 ## Coleção compartilhada de endpoints para Teste
 
-- **[Aqui coleção dos endpoints desenvolvidos Postman](https://www.getpostman.com/collections/920591f9091311b8a775)**
+- **[Aqui coleção dos endpoints desenvolvidos Postman](https://www.postman.com/cryosat-geoscientist-79917435/workspace/pharma-app/documentation/16726946-df0d59c2-661b-4501-b1a6-bf5c0450c97d)**
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/920591f9091311b8a775?action=collection%2Fimport)
+
 
 ## Motivação
 

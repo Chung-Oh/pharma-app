@@ -95,8 +95,7 @@ class UserController extends Controller
                 ], 404);
             }
 
-            $user->update($validated);
-            return $user;
+            return $user->update($validated);
 
         } catch (Exception $e) {
             return new JsonResponse([
