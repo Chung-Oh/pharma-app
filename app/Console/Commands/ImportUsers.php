@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Log;
 class ImportUsers extends Command
 {
     /**
-     * php artisan command:import-users
-     * 
      * The name and signature of the console command.
      *
      * @var string
